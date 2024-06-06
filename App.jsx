@@ -1,19 +1,15 @@
-import React from './core/React';
+import React from "./core/React.js"
 
-function Bbb(params) {
-  return (
-    <div id="bbb">
-      Bbb<div>num：{params.num}</div>
-    </div>
-  );
-}
 function App() {
+  const handleClick = () => {
+    confirm("click")
+  }
   return (
-    <div id="app">
+    <div onClick={handleClick}>
       App
-      <Bbb num={123}></Bbb>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+

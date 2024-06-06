@@ -4,7 +4,6 @@ function createElement(type, props, ...children) {
     props: {
       ...props,
       children: children.map((child) => {
-        console.log('child', child);
         const testNode = typeof child === 'string' || typeof child === 'number';
         return testNode ? createTextNode(child) : child;
       }),
@@ -43,7 +42,14 @@ function createDom(fiber) {
   Object.keys(fiber.props)
     .filter(isProperty)
     .forEach((name) => {
-      dom[name] = fiber.props[name];
+      if(name.startsWith("on")) {
+        const eventType = name.slice(2).toLowerCase()
+      console.log("eventType",eventType);
+      console.log("fiber.props[name]",fiber.props[name]);
+      dom.addEventListener(eventType, fiber.props[name])
+      } else {
+        dom[name] = fiber.props[name];
+      }
     });
   return dom;
 }
@@ -89,7 +95,6 @@ function performWorkOfUnit(fiber) {
 }
 
 function commitRoot() {
-  console.log(root);
   commitWork(root.child);
   root = null;
 }
